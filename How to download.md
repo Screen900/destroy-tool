@@ -13,7 +13,7 @@ cd destroy-tool
 
 # for run the tool
 
-python3 destroy.py
+python3 Destroy.py
 
 
 
