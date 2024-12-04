@@ -8,6 +8,7 @@ pkg install python
 
 pkg install git
 
+# Very important 
 pip install aiohttp pyfiglet colorama validators
 
 git clone https://github.com/Screen900/destroy-tool.git
