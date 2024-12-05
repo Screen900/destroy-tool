@@ -18,10 +18,10 @@ pkg install git
 # Very important 
 pip install aiohttp pyfiglet colorama validators
 
-git clone https://github.com/Screen900/destroy-tool.git
+git clone https://github.com/Screen900/destroy-web
 
 # For open tool
-cd destroy-tool
+cd destroy-web
 
 # for run the tool
 
